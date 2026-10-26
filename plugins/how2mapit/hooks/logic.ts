@@ -45,7 +45,8 @@ export function promptContext(text: string | undefined): string | null {
 }
 
 /** What a How2MapIt search result says it covered: company, personal, none, unscored, or found (an older server).
- *  Only the JSON before the excerpts is read, so author text cannot fake a value. */
+ *  Author text cannot fake a value: it sits inside JSON strings, where its quotes are escaped. Only the JSON before
+ *  the text block's excerpts is read. */
 export function searchCoverage(text: string): string {
   const json = text.split('\n\nExcerpts')[0] ?? ''
   const m = /"coverage"\s*:\s*"(\w+)"/.exec(json)
@@ -62,12 +63,13 @@ export class Tracker {
   private writes = 0
   private recorded = false
   private offeredOnce = false
+  private rearmed = false
 
   /** A How2MapIt search finished: a new window starts. "error" for a refused or failed search. */
   search(coverage: string): void {
     this.coverage = coverage
     this.edits = this.shells = this.writes = 0
-    this.recorded = this.offeredOnce = false
+    this.recorded = this.offeredOnce = this.rearmed = false
   }
 
   /** Any other tool call. */
@@ -87,8 +89,11 @@ export class Tracker {
     this.offeredOnce = true
   }
 
-  /** The offer turn never ran (the person dropped it): it may be asked for again. */
+  /** The offer turn never ran (the person dropped it, or it was refused): it may be asked for once more in this
+   *  window, never again, so a refusal that repeats (a settings hook, a usage limit) cannot queue an offer every turn. */
   offerDropped(): void {
+    if (this.rearmed) return
+    this.rearmed = true
     this.offeredOnce = false
   }
 

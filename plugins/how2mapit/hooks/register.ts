@@ -20,19 +20,21 @@ export const register: Register = (on) => {
   })
 
   on('prompt.submit', async ($, e, next) => {
-    // Only what the person typed gets the reminder: not a slash command, a hidden prompt, a background task's
-    // notification, or a plugin's prompt (this mod's own offer turn included).
-    if (e.command || e.isMeta || e.origin.kind !== 'composer') return next(e)
+    // Only what the person typed gets the reminder, here or through the Remote Control bridge: not a slash command, a
+    // hidden prompt, a background task's notification, or a plugin's prompt (this mod's own offer turn included).
+    const typed = e.origin.kind === 'composer' || e.origin.kind === 'bridge'
+    if (e.command || e.isMeta || !typed) return next(e)
     const line = promptContext(e.text)
     return line ? next({ ...e, context: [...(e.context ?? []), line] }) : next(e)
   })
 
   on('tool.call', async ($, e, next) => {
-    if (how2Tool(e.tool) !== 'search') {
-      tracker.call(e.tool)
-      return next(e)
-    }
     const result = await next(e)
+    if (how2Tool(e.tool) !== 'search') {
+      // Work is a call that ran and changed something: a refused, failed or read-only call (ls, git status) is not.
+      if (!result.deny && !result.isError && !result.isReadOnly) tracker.call(e.tool)
+      return result
+    }
     tracker.search(result.deny || result.isError ? 'error' : searchCoverage(result.text ?? ''))
     return result
   })
@@ -48,7 +50,7 @@ export const register: Register = (on) => {
       // only then. A prompt the person drops resolves { drop }; the offer may then be asked for again.
       void $.prompt
         .submit({ text: OFFER_REASON })
-        .then((r) => { if ('drop' in r && r.drop) tracker.offerDropped() })
+        .then((r) => { if (r.drop) tracker.offerDropped() })
         .catch(() => tracker.offerDropped())
     }
     return out
