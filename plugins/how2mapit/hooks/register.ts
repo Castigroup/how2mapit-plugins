@@ -47,7 +47,7 @@ export const register: Register = (on) => {
     if (interactive && tracker.shouldOffer()) {
       tracker.offered()
       // Not awaited (the documented pattern): the queued turn starts once this one has ended, and the call resolves
-      // only then. A prompt the person drops resolves { drop }; the offer may then be asked for again.
+      // only then. A prompt the person drops resolves { drop }; the offer may then be asked for once more.
       void $.prompt
         .submit({ text: OFFER_REASON })
         .then((r) => { if (r.drop) tracker.offerDropped() })
