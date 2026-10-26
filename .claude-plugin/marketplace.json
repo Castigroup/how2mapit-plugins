@@ -1,0 +1,13 @@
+{
+  "name": "how2mapit-plugins",
+  "description": "How2MapIt plugins for Claude",
+  "owner": { "name": "Castigroup", "url": "https://how2mapit.com" },
+  "plugins": [
+    {
+      "name": "how2mapit",
+      "displayName": "How2MapIt",
+      "source": "./plugins/how2mapit",
+      "description": "Work from your How2MapIt processes and record new ones as you work"
+    }
+  ]
+}
