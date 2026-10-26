@@ -2,7 +2,8 @@
 
 // The How2MapIt server's tools, under any install's name: the claude.ai connector (mcp__claude_ai_How2__search), a server
 // added with `claude mcp add` (mcp__how2__search) or this plugin's own (mcp__plugin_how2mapit_how2mapit__search).
-const HOW2_TOOL = /^mcp__(?:.*_)?how2(?:mapit)?__(\w+)$/i
+// A connector named with a space ("How2 MapIt") arrives as How2_MapIt.
+const HOW2_TOOL = /^mcp__(?:.*_)?how2(?:_?mapit)?__(\w+)$/i
 const RECORDING = new Set(['create_personal_process', 'edit_personal_process', 'create_draft_process', 'edit_process'])
 const EDIT_TOOLS = new Set(['Edit', 'Write', 'MultiEdit', 'NotebookEdit'])
 const SHELL_TOOLS = new Set(['Bash', 'PowerShell'])

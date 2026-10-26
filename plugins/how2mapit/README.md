@@ -12,6 +12,11 @@ processes, so next time follows the same way. Nothing is recorded without your y
 | `how2-work` skill | Yes | Yes | Yes |
 | Reminder before a task, offer after the work | — | — | Yes |
 
+## Install
+
+In Claude Code: `/plugin install how2mapit --marketplace castigroup/how2mapit-plugins`. On claude.ai: add the
+marketplace `https://github.com/castigroup/how2mapit-plugins` under Customize > Plugins, then install How2MapIt.
+
 ## Use it
 
 Ask Claude to do a piece of work as usual. Claude says which How2MapIt process applies, or that none does, and follows

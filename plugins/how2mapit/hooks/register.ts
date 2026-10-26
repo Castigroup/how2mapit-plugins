@@ -6,13 +6,6 @@ import { OFFER_REASON, Tracker, how2Tool, isOffer, promptContext, searchCoverage
 export const register: Register = (on) => {
   // Module variables outlive /clear, /resume and /branch (session.start does not fire again), so session.end resets.
   let tracker = new Tracker()
-  // Nobody can answer an offer in `claude -p`; true unless session.start says otherwise.
-  let interactive = true
-
-  on('session.start', async ($, e, next) => {
-    interactive = e.isInteractive !== false
-    return next(e)
-  })
 
   on('session.end', async ($, e, next) => {
     tracker = new Tracker()
@@ -20,9 +13,11 @@ export const register: Register = (on) => {
   })
 
   on('prompt.submit', async ($, e, next) => {
-    // Only what the person typed gets the reminder, here or through the Remote Control bridge: not a slash command, a
-    // hidden prompt, a background task's notification, or a plugin's prompt (this mod's own offer turn included).
-    const typed = e.origin.kind === 'composer' || e.origin.kind === 'bridge'
+    // A person's prompt gets the reminder: typed at the terminal, through Remote Control, or through an SDK host (the
+    // desktop app's Code tab and the IDE extensions may arrive as `sdk`; in a `claude -p` script it costs one line).
+    // Not a slash command, a hidden prompt, a background task's notification, or a plugin's prompt (this mod's own
+    // offer turn included).
+    const typed = e.origin.kind === 'composer' || e.origin.kind === 'bridge' || e.origin.kind === 'sdk'
     if (e.command || e.isMeta || !typed) return next(e)
     const line = promptContext(e.text)
     return line ? next({ ...e, context: [...(e.context ?? []), line] }) : next(e)
@@ -44,7 +39,9 @@ export const register: Register = (on) => {
     // The main conversation's answered turns only.
     if (e.agentId || e.reason !== 'answer') return out
     if (isOffer(e.answer)) tracker.offered()
-    if (interactive && tracker.shouldOffer()) {
+    // Someone must be able to see and answer the offer: a plain `claude -p` run draws on no surface (end-to-end review
+    // 2026-10-26: isInteractive is false for SDK hosts too, which can have a person at them).
+    if (tracker.shouldOffer() && (await $.session.surfaces()).length > 0) {
       tracker.offered()
       // Not awaited (the documented pattern): the queued turn starts once this one has ended, and the call resolves
       // only then. A prompt the person drops resolves { drop }; the offer may then be asked for once more.
