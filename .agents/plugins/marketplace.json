@@ -1,0 +1,12 @@
+{
+  "name": "how2mapit-plugins",
+  "interface": { "displayName": "How2MapIt" },
+  "plugins": [
+    {
+      "name": "how2mapit",
+      "source": { "source": "local", "path": "./chatgpt/how2mapit" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

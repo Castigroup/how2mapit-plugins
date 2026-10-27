@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "how2mapit",
+  "version": "0.1.0",
+  "description": "Work from your company's How2MapIt processes: find the agreed process before a task, follow it, and offer to record work no process covers as a personal process. Brings the How2MapIt connector with it.",
+  "author": { "name": "Castigroup", "url": "https://how2mapit.com" },
+  "homepage": "https://how2mapit.com",
+  "repository": "https://github.com/castigroup/how2mapit-plugins",
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "How2MapIt",
+        "shortDescription": "Work from your How2MapIt processes and record new ones as you work",
+        "developerName": "Castigroup",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "websiteURL": "https://how2mapit.com"
+      }
+    }
+  }
+}
