@@ -40,7 +40,7 @@ skip it and tell the person.
    - A lasting improvement: note it.
    - Unclear which: ask.
 6. After the work, list the improvements, each against the activity it affects, and ask before writing them:
-   - The person's own process: `edit_personal_process` (pass `baseVersion` from fetch).
+   - The person's own process: `edit_personal_process`, with the `baseVersion` that fetch returned.
    - A company process: a company draft for review (`get_process_for_edit`, then `edit_process`). Only if the person
      asks; the published version stays in force until it is approved.
 
@@ -64,7 +64,7 @@ Do not offer for:
 
 On yes:
 1. `list_personal_folders`; pick the folder whose name fits, or none.
-2. `create_personal_process` with the title, the activities and the folder. Pass a `requestKey` (for example the title
+2. `create_personal_process` with the title, the activities and the folder. Include a `requestKey` (for example the title
    plus today's date) so a retry never saves twice.
 3. Give the person the `url` from the result.
 
