@@ -11,8 +11,9 @@ const SHELL_TOOLS = new Set(['Bash', 'PowerShell'])
 const OTHER_WRITE = /^mcp__.*__(?:\w+_)?(create|send|update|edit|write|delete|move|upload|post|reply|forward)(?:_\w+)?$/i
 
 /** The line the skill and OFFER_REASON ask an offer to end with; how the mod knows an offer was made. */
-export const OFFER_LINE = 'How2: record as a personal process?'
-const OFFERED = /How2: record as a personal process\?/i
+export const OFFER_LINE = 'How2MapIt: record as a personal process?'
+// Also the short form the 0.2 skill asked for, so a session that loaded the older skill is still read.
+const OFFERED = /How2(?:MapIt)?: record as a personal process\?/i
 
 /** Whether an answer carries the offer line (any case, anywhere in the text). */
 export function isOffer(answer: string): boolean {
@@ -22,11 +23,11 @@ export function isOffer(answer: string): boolean {
 export const PROMPT_CONTEXT =
   'How2MapIt (how2mapit plugin): if this message asks for work to be done, not a question or small talk, then before ' +
   "starting: call the How2MapIt search tool with the task in the person's words (if your tools are deferred, search " +
-  'them for "how2 search" first), and say in one line which process applies (How2: <title>) or How2: no process. Then ' +
+  'them for "how2 search" first), and say in one line which process applies (How2MapIt: <title>) or How2MapIt: no process. Then ' +
   'follow the how2mapit:how2-work skill. Skip this for follow-ups to work already searched in this conversation.'
 
 export const OFFER_REASON =
-  'How2: the latest How2MapIt search found no process for this work, and work was done since. Following the ' +
+  'The latest How2MapIt search found no process for this work, and work was done since. Following the ' +
   'how2mapit:how2-work skill: if the work is complete and repeatable, offer once to record it as a personal process: ' +
   `one short message with a generic title and the activities as a numbered list, ending with the line "${OFFER_LINE}". ` +
   'Do not record it unless the person says yes. If the work is not finished, or was a one-off or trivial, reply in ' +

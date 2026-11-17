@@ -83,7 +83,12 @@ describe('isOffer', () => {
     expect(isOffer(OFFER_LINE.toUpperCase())).toBe(true)
   })
 
+  test('the 0.2 short form of the line is still an offer', () => {
+    expect(isOffer('1. Do it\n\nHow2: record as a personal process?')).toBe(true)
+  })
+
   test('an answer without the line is no offer', () => {
+    expect(isOffer('How2MapIt: no process')).toBe(false)
     expect(isOffer('How2: no company or personal process covers this')).toBe(false)
   })
 })

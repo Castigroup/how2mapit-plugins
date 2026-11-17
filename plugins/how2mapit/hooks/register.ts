@@ -21,7 +21,7 @@ export const register: Register = (on) => {
     if (e.command || e.isMeta || !typed) return next(e)
     const line = promptContext(e.text)
     return line ? next({ ...e, context: [...(e.context ?? []), line] }) : next(e)
-  })
+  }).catch(($, e, next) => next(e)) // Never a guard: if the reminder fails, the prompt goes on as typed.
 
   on('tool.call', async ($, e, next) => {
     const result = await next(e)
@@ -32,7 +32,7 @@ export const register: Register = (on) => {
     }
     tracker.search(result.deny || result.isError ? 'error' : searchCoverage(result.text ?? ''))
     return result
-  })
+  }).catch(($, e, next) => next(e)) // Never a guard: if counting fails, the call's own result stands (replayed, not rerun).
 
   on('turn.complete', async ($, e, next) => {
     const out = await next(e)
