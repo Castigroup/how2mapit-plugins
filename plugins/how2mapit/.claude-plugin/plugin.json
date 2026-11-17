@@ -1,13 +1,18 @@
 {
   "name": "how2mapit",
   "displayName": "How2MapIt",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Work from your company's How2MapIt processes: find the agreed process before a task, follow it, and offer to record work no process covers as a personal process. Brings the How2MapIt connector with it.",
-  "author": { "name": "Castigroup", "url": "https://how2mapit.com" },
+  "author": {
+    "name": "Castigroup",
+    "url": "https://how2mapit.com"
+  },
   "homepage": "https://how2mapit.com",
   "icon": "./icon.png",
+  "documentationUrl": "https://github.com/Castigroup/how2mapit-plugins/tree/main/plugins/how2mapit",
   "supportUrl": "https://how2mapit.com/support",
   "privacyPolicyUrl": "https://how2mapit.com/privacy",
+  "termsOfServiceUrl": "https://how2mapit.com/terms",
   "repository": "https://github.com/castigroup/how2mapit-plugins",
   "license": "MIT"
 }
