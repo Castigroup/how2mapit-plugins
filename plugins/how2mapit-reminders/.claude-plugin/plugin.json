@@ -1,0 +1,11 @@
+{
+  "name": "how2mapit-reminders",
+  "displayName": "How2MapIt reminders",
+  "version": "0.1.0",
+  "description": "For Claude Code: reminds Claude to search How2MapIt before a task, and to offer recording work no process covered. Adds to the How2MapIt plugin.",
+  "author": { "name": "Castigroup", "url": "https://how2mapit.com" },
+  "homepage": "https://how2mapit.com",
+  "repository": "https://github.com/castigroup/how2mapit-plugins",
+  "license": "MIT",
+  "dependencies": ["how2mapit"]
+}

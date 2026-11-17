@@ -4,6 +4,7 @@
 |---|---|---|
 | [How2MapIt](plugins/how2mapit) | Claude | Work from your How2MapIt processes; record new ones as you work |
 | [How2MapIt](chatgpt/how2mapit) | ChatGPT | The same, for ChatGPT |
+| [How2MapIt reminders](plugins/how2mapit-reminders) | Claude Code | Optional: a reminder before each task and an offer after the work |
 
 ## Install in Claude
 
@@ -18,6 +19,10 @@ How2MapIt to Installed by default. It then reaches Claude Code too.
 
     claude plugin install how2mapit --marketplace castigroup/how2mapit-plugins
 
+Add the reminder before each task and the offer after the work (optional):
+
+    claude plugin install how2mapit-reminders --marketplace castigroup/how2mapit-plugins
+
 ## Install in ChatGPT
 
 **Workspace (Business, Enterprise, Edu):** an admin imports the plugin from
@@ -30,4 +35,4 @@ How2MapIt to Installed by default. It then reaches Claude Code too.
 ## Requirements
 
 - A How2MapIt account (Power user licence or higher to record personal processes).
-- Claude Code 2.1.287 or later for the reminder and the offer; claude.ai, Cowork and ChatGPT need nothing extra.
+- Claude Code 2.1.287 or later for How2MapIt reminders; claude.ai, Cowork and ChatGPT need nothing extra.
